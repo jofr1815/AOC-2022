@@ -15,6 +15,8 @@ int charToPriority (char c) {
 }
 
 int main() {
+
+    // Part 1
     string line;
     ifstream input ("input.txt");
     string left;
@@ -44,5 +46,38 @@ int main() {
             }
         }
     }
-    cout << total << endl;
+    cout << "part 1 total: " << total << endl;
+    input.close();
+
+    // Part 2
+    total = 0;
+    input.open("input.txt");
+    string lineA;
+    string lineB;
+    string lineC;
+    while (!input.eof()) {
+        getline(input, lineA);
+        getline(input, lineB);
+        getline(input, lineC);
+
+        for (int i = 0; i < lineA.length(); i ++) {
+            for (int j = 0; j < lineB.length(); j ++) {
+                for (int k = 0; k < lineC.length(); k++) {
+                    if (lineA[i] == lineB[j] && lineB[j] == lineC[k]){
+                        total += charToPriority(lineA[i]);
+                        while (lineA.length() > 0) {
+                            lineA.pop_back();
+                        }
+                        while (lineB.length() > 0) {
+                            lineB.pop_back();
+                        }
+                        while (lineC.length() > 0) {
+                            lineC.pop_back();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout << "part 2 total: " << total << endl;
 }
