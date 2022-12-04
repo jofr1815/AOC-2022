@@ -11,34 +11,43 @@ int main() {
     while(!input.eof()) {
         getline(input, line);
         if (line[2] == 'Y') {
-            // You played paper
-            total += 2;
+            // Draw
+            total += 3;
             if (line[0] == 'A') {
                 // Opponent played rock
-                total += 6;
+                total += 1;
             } else if (line[0] == 'B') {
                 // Opponent played paper
+                total += 2;
+            } else {
+                // Opponent played scissors
                 total += 3;
             }
         } else if (line[2] == 'X') {
-            // You played rock
-            total += 1;
-            if (line[0] == 'C') {
-                // Opponent played scissors
-                total += 6;
-            } else if (line[0] == 'A') {
+            // Lose
+            if (line[0] == 'A') {
                 // Opponent played rock
                 total += 3;
+            } else if (line[0] == 'B') {
+                // Opponent played paper
+                total += 1;
+            } else {
+                // Opponent played scissors
+                total += 2;
             }
         } else {
-            // You played scissors
-            total += 3;
-            if (line[0] == 'B') {
+            // Win
+            total += 6;
+            if (line[0] == 'A') {
+                // Opponent played rock
+                total += 2;
+
+            } else if (line[0] == 'B') {
                 // Opponent played paper
-                total += 6;
-            } else if (line[0] == 'C') {
-                // Opponent played scissors
                 total += 3;
+            } else {
+                // Opponent played scissors
+                total +=1;
             }
         }
     }
