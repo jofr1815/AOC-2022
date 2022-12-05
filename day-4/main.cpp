@@ -12,10 +12,10 @@ int main() {
     string rightLower;
     string rightUpper;
     int index = 0;
-    int total = 0;
+    int completeOverlap = 0;
+    int partialOverlap = 0;
     while (!input.eof()) {
         getline(input, line);
-        cout << line << endl;
         // Extract first number
         while(line[index] != '-'){
             leftLower.push_back(line[index]);
@@ -39,13 +39,16 @@ int main() {
             rightUpper.push_back(line[index]);
             index++;
         }
-        cout << leftLower << " " << leftUpper << endl;
-        cout << rightLower << " " << rightUpper << endl;
 
         // If one range completely includes the other, increment total
         if((stoi(leftLower) >= stoi(rightLower) && stoi(leftUpper) <= stoi(rightUpper)) || (stoi(leftLower) <= stoi(rightLower) && stoi(leftUpper) >= stoi(rightUpper))) {
-            cout << "One range holds the other" << endl;
-            total++;
+            completeOverlap++;
+        }
+        for (int i = stoi(leftLower); i <= stoi(leftUpper); i++) {
+            if (i >= stoi(rightLower) && i <= stoi(rightUpper)) {
+                partialOverlap++;
+                i = stoi(leftUpper) + 1;
+            }
         }
         index = 0;
         leftLower = "";
@@ -53,5 +56,6 @@ int main() {
         rightLower = "";
         rightUpper = "";
     }
-    cout << total << endl;
+    cout << "Pairs with complete overlap: " << completeOverlap << endl;
+    cout << "Pairs with partial overlap: " << partialOverlap << endl;
 }
