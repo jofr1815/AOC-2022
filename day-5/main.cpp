@@ -4,6 +4,23 @@
 
 using namespace std;
 
+void printArr(string arr[]) {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < arr[i].length(); j++) {
+            cout << arr[i][j];
+        }
+        cout << endl;
+    }
+}
+
+void reverseStr(string &str) {
+    int n = str.length() - 1;
+    for (int i = 0; i <= n/2; i ++) {
+        swap(str[i], str[n-i]);
+    }
+    return;
+}
+
 int main() {
     // Variables for parsing input into lines
     fstream input;
@@ -25,11 +42,12 @@ int main() {
         cout << endl;
         getline(input, line);
     }
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < arr[i].length(); j++) {
-            cout << arr[i][j];
-        }
-        cout << endl;
-    }
+    // Print out array of strings
+    printArr(arr);
+
+    string x = "ABC";
+    reverseStr(x);
+    cout << x << endl;
+
     return 0;
 }
