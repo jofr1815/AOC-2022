@@ -30,6 +30,15 @@ void moveBoxes(int quantity, string &origin, string &dest) {
     }
 }
 
+void moveBoxeStack(int quantity, string &origin, string &dest) {
+    string temp;
+    for(int i = 0; i < quantity; i++) {
+        temp.push_back(origin[origin.length()-1]);
+        origin.pop_back();
+    }
+    moveBoxes(temp.length(), temp, dest);
+}
+
 int main() {
     // Variables for parsing input into lines
     fstream input;
@@ -37,6 +46,7 @@ int main() {
 
     // Array of strings to hold the stack of boxes
     string arr[9];
+    string arrStack[9];
 
     // Open file and get first line
     input.open("input.txt");
@@ -46,16 +56,16 @@ int main() {
             cout << line[i*4 + 1] << " ";
             if (line[i*4 + 1] != ' ' && line[i*4 + 1] != 0) {
                 arr[i].push_back(line[i*4 + 1]);
+                arrStack[i].push_back(line[i*4 + 1]);
             }
         }
         cout << endl;
         getline(input, line);
     }
-    // Print out array of strings
-
     // Reverse strings so that top box is at the top of the stack
     for (int i = 0; i < 9; i ++) {
         reverseStr(arr[i]);
+        reverseStr(arrStack[i]);
     }
     cout << endl;
     // Print out array to verify the strings have been reversed
@@ -72,7 +82,6 @@ int main() {
     // Print out rest of file, ie the instructions
     while (!input.eof()) {
         getline(input, line);
-        //cout << line << endl;
 
         // Parse instruction into quantity, origin, and destination
         index = 0;
@@ -114,14 +123,19 @@ int main() {
 
         // Move boxes according to the instructions
         moveBoxes(quantity, arr[origin], arr[dest]);
+        moveBoxeStack(quantity, arrStack[origin], arrStack[dest]);
 
         //printArr(arr);
     }
-
     string result;
     for (int i = 0; i < 9; i++){
         result.push_back(arr[i][arr[i].length()-1]);
     }
-    cout << "result: " << result << endl;
+    cout << "Part 1: " << result << endl;
+    result.clear();
+    for (int i = 0; i < 9; i++){
+        result.push_back(arrStack[i][arrStack[i].length()-1]);
+    }
+    cout << "Part 2: " << result << endl;
     return 0;
 }
