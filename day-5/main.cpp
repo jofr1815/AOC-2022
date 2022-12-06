@@ -6,6 +6,7 @@ using namespace std;
 
 void printArr(string arr[]) {
     for (int i = 0; i < 9; i++) {
+        cout << i+1 << ". ";
         for (int j = 0; j < arr[i].length(); j++) {
             cout << arr[i][j];
         }
@@ -19,6 +20,14 @@ void reverseStr(string &str) {
         swap(str[i], str[n-i]);
     }
     return;
+}
+
+void moveBoxes(int quantity, string &origin, string &dest) {
+    for(int i = 0; i < quantity; i++) {
+        //cout << "moving: " << origin[origin.length()-1] << endl;
+        dest.push_back(origin[origin.length()-1]);
+        origin.pop_back();
+    }
 }
 
 int main() {
@@ -43,12 +52,12 @@ int main() {
         getline(input, line);
     }
     // Print out array of strings
-    printArr(arr);
 
     // Reverse strings so that top box is at the top of the stack
     for (int i = 0; i < 9; i ++) {
         reverseStr(arr[i]);
     }
+    cout << endl;
     // Print out array to verify the strings have been reversed
     printArr(arr);
 
@@ -59,10 +68,12 @@ int main() {
     int index = 0;
     string parser;
 
+    getline(input, line);
     // Print out rest of file, ie the instructions
     while (!input.eof()) {
         getline(input, line);
-        // cout << line << endl;
+        //cout << line << endl;
+
         // Parse instruction into quantity, origin, and destination
         index = 0;
 
@@ -78,7 +89,7 @@ int main() {
 
         // Set quantity to the value extracted by the parser
         quantity = stoi(parser);
-        cout << quantity << " ";
+        //cout << quantity << " ";
 
         // Clear the parser for the next number
         parser.clear();
@@ -91,11 +102,26 @@ int main() {
         // Extract the second number from the input string
         // The locations are labeled 1 through 9, so now we can just extract the character at the index
         origin = int(line[index] - '0');
-        cout << origin << " ";
+        // Correct for the 0 indexed array
+        origin--;
+        //cout << origin << " ";
 
         // Extract the end number (destination)
         dest = int(line[line.length() - 1] - '0');
-        cout << dest << endl;
+        // Correct for 0 index of array
+        dest--;
+        //cout << dest << endl;
+
+        // Move boxes according to the instructions
+        moveBoxes(quantity, arr[origin], arr[dest]);
+
+        //printArr(arr);
     }
+
+    string result;
+    for (int i = 0; i < 9; i++){
+        result.push_back(arr[i][arr[i].length()-1]);
+    }
+    cout << "result: " << result << endl;
     return 0;
 }
