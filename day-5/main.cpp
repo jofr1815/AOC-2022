@@ -33,7 +33,7 @@ int main() {
     input.open("input.txt");
     getline(input, line);
     while(line.length() != 0 && line[1] != '1') {
-        for (int i = 0; i < line.length(); i++) {
+        for (int i = 0; i < 9; i++) {
             cout << line[i*4 + 1] << " ";
             if (line[i*4 + 1] != ' ' && line[i*4 + 1] != 0) {
                 arr[i].push_back(line[i*4 + 1]);
@@ -62,7 +62,7 @@ int main() {
     // Print out rest of file, ie the instructions
     while (!input.eof()) {
         getline(input, line);
-        cout << line << endl;
+        // cout << line << endl;
         // Parse instruction into quantity, origin, and destination
         index = 0;
 
