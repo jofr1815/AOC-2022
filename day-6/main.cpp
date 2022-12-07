@@ -4,18 +4,27 @@
 
 using namespace std;
 
-bool compareHelper(char a, char b, char c, char d) {
-    if (a == b || a == c || a == d || b == c || b == d || c == d) {
-        return false;
+bool compareHelper(string subStr) {
+    for (int i = 0; i < subStr.length(); i++) {
+        for (int j = 0; j < subStr.length(); j++) {
+            if ((i != j) && subStr[i] == subStr[j]) {
+                return false;
+            }
+        }
     }
     return true;
 }
 
-int findStart(string input) {
-    for (int i = 3; i < input.length(); i++) {
-        if (compareHelper(input[i], input[i-1], input[i-2], input[i-3])) {
+int findStart(string input, int n) {
+    for (int i = (n-1); i < input.length(); i++) {
+        string subStr;
+        for (int j = 0; j < n; j++) {
+            subStr.push_back(input[i - j]);
+        }
+        if (compareHelper(subStr)) {
             return i + 1;
         }
+        subStr.clear();
     }
     return 0;
 }
@@ -26,7 +35,8 @@ int main() {
     string line;
     input.open("input.txt");
     getline(input, line);
-    cout << findStart(line) << endl;
+    cout << "Part 1: " << findStart(line, 4) << endl;
+    cout << "Part 2: " << findStart(line, 14) << endl;
     input.close();
     return 0;
 }
